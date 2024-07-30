@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="flex bg-gray-900 justify-between">
+        <a href="/" class="px-5 py-2 bg-red-500 text-white flex ">Accueil</a>
+        <h1 class="font-bold text-center text-2xl py-5 mb-5 text-white px-5">Welcome on your dashboard</h1>
+        <h1 class="font-bold text-center text-2xl py-5 mb-5 text-white px-5">{{ user.nom }} {{ user.prenom }} <a href="logout" class="px-5 py-2 bg-red-500">se deconnecter</a></h1>
+    </div>
+  
+    <div class="py-5 my-5 text-center">
+        <h1 class="text-2xl font-bold">Tableau des categories</h1>
+    </div>
+    {{!-- user table --}}
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">ID</th>
+                    <th scope="col" class="px-6 py-3">nom</th>
+                    <th scope="col" class="px-6 py-3">prenom</th>
+                    <th scope="col" class="px-6 py-3">email</th>
+                    <th scope="col" class="px-6 py-3">ville</th>
+                    <th scope="col" class="px-6 py-3">numero</th>
+                    <th scope="col" class="px-6 py-3">role</th>
+                    <th scope="col" class="px-6 py-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#each users}}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ this.id }}</td>
+                    <td class="px-6 py-4">{{ this.nom }}</td>
+                    <td class="px-6 py-4">{{ this.prenom }}</td>
+                    <td class="px-6 py-4">{{ this.email }}</td>
+                    <td class="px-6 py-4">{{ this.ville }}</td>
+                    <td class="px-6 py-4">{{ this.numero }}</td>
+                    {{#if this.admin}}
+                    <td class="px-6 py-4">
+                        <form action="update/admin/{{ this.id }}" method="POST">
+                            <input type="hidden" name="admin" value="{{ this.admin }}">
+                            <a type="submit" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" href="">Admin</a>
+                        </form>
+                    </td>
+                    {{else}}
+                    <td class="px-6 py-4">
+                        <form action="update/admin/{{ this.id }}" method="POST">
+                            <input type="hidden" name="admin" value="{{ this.admin }}">
+                            <a type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" href="">User</a>
+                        </form>
+                    </td>
+                    {{/if}}
+                    <td class="px-6 py-4">
+                        <a class="text-blue-500" href="show/{{ this.id }}">Profile</a>
+                        <a class="text-red-500" href="delete/{{ this.id }}">Delete</a>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    </div>
+
+
+    <div class="py-5 my-5 text-center">
+        <h1 class="text-2xl font-bold">Tableau des categories</h1>
+    </div>
+    {{!-- cate table add --}}
+    <div class="grid grid-cols-2 gap-2 mx-auto py-5 mt-5">
+        <div class="px-5 mx-5">
+            <form action="createCategory" method="POST" class="mx-auto">
+                <div class="py-2">
+                    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tilte</label>
+                    <input type="text" id="title" name="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="title of category" required />
+                </div>
+                <div class="py-2">
+                    <label for="descrption" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                    <textarea id="description" name="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="description of category"></textarea>
+                </div>
+                <div>
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2">create</button>
+                </div>
+            </form>    
+        </div>
+        <div>
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">ID</th>
+                                <th scope="col" class="px-6 py-3">nom</th>
+                                <th scope="col" class="px-6 py-3">prenom</th>
+                                <th scope="col" class="px-6 py-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {{#each categories }}
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ this.id }}</td>
+                                <td class="px-6 py-4">{{ this.title }}</td>
+                                <td class="px-6 py-4">{{ this.description }}</td>
+                                <td class="px-6 py-4">
+                                    <a class="text-blue-500" href="show_cat/category/{{ this.id }}">Details</a>
+                                    <a class="text-red-500" href="delete/category/{{ this.id }}">Delete</a>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-5 my-5 text-center">
+        <h1 class="text-2xl font-bold">Tableau des evenements</h1>
+    </div>
+    {{!-- events table add --}}
+    <div class="grid grid-cols-2 gap-2 mx-auto py-5 mt-5">
+        <div class="px-5 mx-5">
+            <form action="createEvent" method="POST" class="mx-auto">
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="py-2">
+                        <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tilte</label>
+                        <input type="text" id="title" name="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="title" required />
+                    </div>
+                    <div class="py-2">
+                        <label for="categorieId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categories</label>
+                        <select id="categorieId" name="categorieId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option selected >Choisis une categorie</option>
+                            {{#each categories }}
+                            <option value="{{ this.id }}" >{{ this.title }}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="py-2">
+                    <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                    <textarea id="description" name="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="description"></textarea>
+                </div>
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="py-2">
+                        <label for="prix" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prix</label>
+                        <input type="number" id="prix" name="prix" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="prix" required />
+                    </div>
+                    <div class="py-2">
+                        <label for="ticket" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nonmbre de tickets</label>
+                        <input type="number" id="ticket" name="ticket" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="tickets" required />
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="py-2">
+                        <label for="ville" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ville</label>
+                        <input type="text" id="ville" name="ville" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ville" required />
+                    </div>
+                    <div class="py-2">
+                        <label for="lieu" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lieu</label>
+                        <input type="text" id="lieu" name="lieu" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="lieu" required />
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="py-2">
+                        <label for="file" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image links</label>
+                        <input type="text" id="file" name="file" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Imgae links" required />
+                        <p class="text-sm text-gray-400 pt-2">Uploader le lien de l'image dans le champs ci-dessus</p>
+                    </div>
+                    <div class="py-2">
+                        <label for="lieu" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date</label>
+                        <input type="datetime-local" id="date" name="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="title of category" required />
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="py-2">
+                        <label for="numero" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">numero</label>
+                        <input type="text" id="numero" name="numero" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="numero" required />
+                    </div>
+                    <div class="py-2">
+                        <label for="localisation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Localisation</label>
+                        <input type="text" id="localisation" name="localisation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="localisation" required />
+                    </div>
+                </div>
+               
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="py-2">
+                        <label for="code_events" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code evenment</label>
+                        <input type="number" id="code_events" name="code_events" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="code event" required />
+                    </div>
+                    <div class="py-2">
+                        <label for="webside" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Web side</label>
+                        <input type="text" id="webside" name="webside" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="web site" required />
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2">create</button>
+                </div>
+            </form>    
+        </div>
+        <div>
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">ID</th>
+                            <th scope="col" class="px-6 py-3">title</th>
+                            <th scope="col" class="px-6 py-3">description</th>
+                            <th scope="col" class="px-6 py-3">prix</th>
+                            <th scope="col" class="px-6 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {{#each events }}
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ this.id }}</td>
+                            <td class="px-6 py-4 uppercase">{{ this.title }}</td>
+                            <td class="px-6 py-4">{{ this.description }}</td>
+                            <td class="px-6 py-4">{{ this.prix }}</td>
+                            <td class="px-6 py-4">
+                                <a class="text-blue-500" href="show_event/events/{{ this.id }}">Details</a>
+                                <a class="text-red-500" href="delete/events/{{ this.id }}">Delete</a>
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+</body>
+</html>

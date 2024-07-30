@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>App</title>
+</head>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Quicksand:wght@300..700&family=Zen+Dots&display=swap"
+  rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
+
+<body>
+  <header>
+    <div class="logo">
+      <a href='/' class='flex items-center justify-between mr-4'>
+              <img
+                src='https://www.freeiconspng.com/thumbs/logo-design/rainbow-logo-design-transparent-0.png'
+                class='mr-3 h-8'
+                alt='Flowbite Logo'
+              />
+              <span
+                class='self-center text-2xl font-semibold whitespace-nowrap dark:text-white'
+              >Show Time</span>
+            </a>
+    </div>
+    <div id="login">
+      {{#if session }}
+      <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="profile flex justify-between uppercase" type="button">{{#if initName}}<span>{{ initName }}</span>{{/if}} <svg class="w-4 h-3 ms-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+      </svg>
+      </button>
+
+      <!-- Dropdown menu -->
+      <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-60 dark:bg-gray-700">
+          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+            {{#if admin}}
+            <li class="py-3">
+              <a href="/dashboard" class="block px-4 py-2 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+            </li>
+            {{/if}}
+            <li class="py-3">
+              <a href="#" class="block px-4 py-2 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+            </li>
+            <li class="py-3">
+              <a href="/logout" class="block px-4 py-2 dark:hover:bg-gray-600 dark:hover:text-white">Se deconnecter</a>
+            </li>
+          </ul>
+      </div>
+      {{else}}
+      <a class="login-link" href="/signup">S'inscrire</a>
+      <a class="login-link" href="/login">Se Connecter</a>
+      {{/if }}
+      
+    </div>
+  </header>
+  <nav>
+    <ul>
+      {{#each categories }}
+      <li>
+        <a href="">{{ this.title }}</a>
+      </li>
+      {{/each}}
+    </ul>
+  </nav>
+  <section id="banniere">
+    <h1 class="text-white text-center">Reservez tous vos tickets d'événement en un seul clique</h1>
+  </section>
+  <h1>Evenements à venir</h1>
+  <main>
+    {{#each events }}
+    <a href="/show/events/{{ this.id }}">
+      <div class="card-event">
+        <div class="img">
+          <img src="{{ this.file }}"
+            alt="image concert josey">
+        </div>
+        <div class="text">
+          <h1>{{this.title}}</h1>
+          <ul>
+            <li>
+              <span class="material-symbols-outlined">
+                calendar_month</span>
+              <p>{{this.date}}</p>
+            </li>
+            <li>
+              <span class="material-symbols-outlined">
+                location_on
+              </span>
+              <p>{{this.lieu}}</p>
+            </li>
+            <li>
+              <span class="material-symbols-outlined">
+                payments
+              </span>
+              {{!-- <p>À partir de {{#each tickets}}{{#if tickets.event_id this.id}}
+                {{this.prix}}{{/if}}{{/each}} F CFA</p> --}}
+                <p>{{this.prix}} FCFA</p>
+            </li>
+            <li>
+              <span class="material-symbols-outlined">
+                barcode
+              </span>
+              <p>Code événement {{this.code_events}}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </a>
+    {{/each}}
+    <br>
+    <br>
+    <br>
+    <br>
+  </main>
+  <footer>
+    <div id="foot">
+      <h2>CONTACTEZ NOUS </h2>
+      <p>aminta.traore@epitech.eu</p>
+      <p>franck.koffi@epitech.eu</p>
+      <p>aziz.diomande@epitech.eu</p>
+      <p>bakary.sylla@epitech.eu</p>
+      <h3>Epitech we.code , cote d'ivoire Abidjan </h3>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+</body>
+
+</html>

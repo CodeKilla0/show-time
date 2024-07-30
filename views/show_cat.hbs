@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="flex py-5 my-5 px-4">
+        <a href="/dashboard">retour</a>
+    </div>
+    <ul class="my-5 max-w-2xl p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+        <form action="/update/category/{{ data.id }}" method="POST">
+            
+            <div class="flex my-3 mx-2">
+                <input type="hidden" name="id" value="{{ data.id }}">
+                <li class="px-2">
+                    <input type="text" id="title" name="title" value="{{ data.title }}" required />
+                </li>
+                <li class="px-2">
+                    <input type="text" id="description" name="description" value="{{ data.description }}" required />
+                </li>
+            </div>
+            <div class="flex my-3 mx-2">
+                <li class="px-2">
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modifier</button>
+                </li>
+            </div> 
+        </form>
+    </ul>
+    
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+</body>
+</html>

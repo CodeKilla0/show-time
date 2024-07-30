@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>tickets</title>
+</head>
+<body>
+    <a href="/download/{{ data.id }}/pdf" class="py-2 px-3 bg-blue-500 hover:bg-blue-700 text-white">telechargez votre ticket ici</a>
+    <main class="flex justify-center items-center h-screen">
+        <div class="flex w-1/2 border border-gray-200 h-72 rounded-2xl shadow-md">
+            <div class="h-full w-3/4 p-3 bg-gray-50">
+                <p class="webside text-sm">www.show-time.com | votre site de ticket en ligne</p>
+                <h1 class="title font-bold text-2xl mb-7">{{ data.title }}</h1>
+                <p class="text-sm">{{ data.ville }} {{ data.lieu }}</p>
+                <p class="text-sm font-bold">{{ data.date }}</p>
+                <div class="grid grid-cols-2 gap-2 mt-7">
+                    <div class="">
+                        <h2>PROPIETAIRE</h2>
+                        <p class="text-sm">{{ user.nom }}</p>
+                        <p class="text-sm">{{ user.prenom }}</p>
+                    </div>
+                    <div>
+                        <h2>EVENTS</h2>
+                        <p class="text-sm">{{ data.code_events }}</p>
+                        <p class="text-sm">{{ data.prix }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="1/4 flex items-center justify-center">
+                <img src="{{ qrCode }}" class="w-full h-4/5" alt="qrcode">
+            </div>
+        </div>
+    </main>
+    
+</body>
+</html>
